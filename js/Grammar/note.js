@@ -1,4 +1,7 @@
-export{hello, strict, notStrict, variate,dataType}
+export{
+    hello, strict, notStrict, variate, dataType, operator,
+    control
+}
 
 //语句结束符,换行或分号
 function hello(){
@@ -235,3 +238,303 @@ function transition(){
     console.log(Boolean(undefined)); // false
 }
 
+//运算符
+//和其他语言差不太多
+function operator(){
+
+    //算术运算符
+    //加减乘除，取余
+    let a = 5,b = 3;
+    console.log(a + b); //8
+    console.log(a - b); //2
+    console.log(a * b); //15
+    console.log(a / b); //1.6666666666666667
+    console.log(a % b); //2
+
+    //赋值运算符
+    //=、+=、-=、*=、/=、%=
+    let url = 'zcoder.com';
+    console.log(a += b); //等价于a=a+b    //8
+    console.log(a -= b); //等价于a=a-b    //5
+    console.log(a *= b); //等价于a=a*b    //15
+    console.log(a /= b); //等价于a=a/b    //5
+    console.log(a %= b); //等价于a=a%b    //2
+
+    //一元运算符
+    //++、--
+
+    //前置操作
+    let n = 1;
+    ++n     //等价于n=n+1 
+    console.log(n); //2
+    --n     //等价于n=n-1 
+    console.log(n); //1
+
+    //后置操作
+    n++     //等价于n=n+1 
+    console.log(n); //2
+
+    //前置操作与后置操作的区别
+    //前置操作会在表达式最先执行，后置操作会在表达式最后执行
+    let num = 2;
+    let sum = 30 + ++num;
+    console.log(sum);    //33
+
+    num = 2;
+    sum = 30 + num++;
+    console.log(sum);    //32
+
+    a = 1;
+    b = a++ + 2;
+    console.log(b);     //3
+
+    //比较运算符
+    // >、<、>=、<=
+    // ==	强制类型转换比较
+    // ===	不强制类型转换比较
+    a = 1
+    b = 2
+    let c = '1'
+    console.log(a < b); //true
+    console.log(a == b); //false
+    console.log(a == c); //true
+    console.log(a === c); //false
+    console.log(a == true); //true
+    console.log(a === true); //false
+
+    //逻辑运算符
+
+    //逻辑与
+    //使用 && 符号表示逻辑与，指符号两端都为 true 时表达式结果为 true
+    a = true;
+    b = true;
+    if (a && b) {
+        console.log('表达式成立');
+    }
+
+    //逻辑或
+    //使用 || 符号表示逻辑或，指符号左右两端有一方为 true，表达式即成立
+    a = true;
+    b = false;
+    if (a || b) {
+        console.log('表达式成立');
+    }
+
+    //逻辑非
+    //使用 ! 符号表示逻辑非，即原来是 true 转变为 false，反之亦然
+    a = true;
+    b = false;
+    if (a && !b) {
+        console.log('表达式成立');
+    }
+
+    //优先级
+    //下列中因为 && 的优先级高所以结果是 true
+    console.log(true || false && false);
+    //可以使用 () 来提高优先级
+    console.log((true || false) && false);
+
+    //短路运算（逻辑中断）
+    //js中，逻辑运算的返回值不是布尔值，而是返回变量的值
+    //短路运算的原理：当有多个表达式（值）时,左边的表达式值可以确定结果时,就不再继续运算右边的表达式的值
+    
+    //逻辑与
+    //语法：表达式1 && 表达式2
+    //特点：一假为假，
+    //所以表达式1为假，就直接返回表达式1。
+    //如果表达式1为真，那么结果取决于表达式2，所以返回表达式2
+    console.log(123 && 456); // 456
+    console.log(0 && 456); //  0
+    console.log(0 && 1 + 2 && 456 * 56789); // 0
+    console.log('' && 1 + 2 && 456 * 56789); // ''
+
+    //逻辑或
+    //语法： 表达式1 || 表达式2
+    //特点：一真为真
+    //所以表达式1为真，就直接返回表达式1。
+    //如果表达式1为假，那么结果取决于表达式2，所以返回表达式2
+    console.log(123 || 456); // 123
+    console.log(123 || 456 || 456 + 123); // 123
+    console.log(0 || 456 || 456 + 123); // 456
+
+    // 逻辑中断很重要 它会影响我们程序运行结果
+    num = 0;
+    console.log(123 || num++);  //123
+    console.log(num); // 0
+
+    //三元运算符
+    //是针对 if 判断的简写形式
+    n = true ? 1 : 2;
+    console.log(n); //1
+
+    let f = true ? (1 == true ? 'yes' : 'no') : 3;
+    console.log(f); // yes
+
+    //指数运算符(ES7)
+    //在 ES7 中引入指数运算符 **，用来实现幂运算
+    //功能与 Math.pow(a, b) 结果相同
+    console.log(2 ** 10);	// 1024
+    console.log(Math.pow(2, 10));
+
+    //typeof运算符
+    //typeof运算符的语法格式： typeof 变量名
+    //typeof运算符的运算结果是以下6个字符串之一：注意字符串都是全部小写
+    //undefined、 number、string、boolean、object、function
+    n = 100
+    let type = typeof n
+    console.log(typeof type)
+    console.log(type)
+
+    //void运算符
+    //格式：void(表达式)
+    //什么都不返回，好像是返回undefined
+    //常用于a标签
+    //<a href="javascript:void(0)">单击此处什么也不会发生</a>
+    n = 'str'
+    n = void(1+1)
+    console.log(n) //undefined
+    console.log(typeof n) //undefined
+
+    let empty = void(0)
+    console.log(empty) //undefined
+    console.log(typeof empty) //undefined
+}
+
+//控制语句
+//和C++，Java差不多
+function control(){
+
+    //if分支语句
+    if (true) {
+        console.log('if分支语句');
+        console.log('表达式成立');
+    }
+
+    //如果只有一条代码块，可以不用写 {}
+    if (true) console.log('表达式成立');
+
+    //else if 和 else 的使用
+    let length = 1 ;
+    let msg;
+    if (length > 10) msg = "密码已经无敌了";
+    else if (length > 6)  msg = "密码安全性中级";
+    else msg = "这密码，要完的节奏";
+
+    //switch分支语句
+    //可以将 switch 理解为 if 的另一种结构清晰的写法。
+    //如果表达式等于 case 中的值，将执行此 case 代码段
+    //break 关键字会终止 switch 的执行
+    //如果case执行后缺少 break 则接着执行后面的语句
+    //没有任何 case匹配时将执行default 代码块
+    let name = '视频';
+    switch (name) {
+        case '产品':
+            console.log('hdcms.com');
+            break;
+        case '视频':
+            console.log('houdunren.com');
+            break;
+        default:
+            console.log('houdunwang.com')
+    }
+
+    //case 合用示例
+    let error = 'warning';
+    switch (error) {
+        case 'notice':
+        case 'warning':
+            console.log('警告或提示信息');
+            break;
+        case 'error':
+            console.log('错误信息');
+    }
+
+    //在switch 与 case 都可以使用表达式
+    let age = 10
+    switch (true) {
+        case age < 15:
+          console.log("儿童");
+          break;
+        case age < 25:
+          console.log("青少年");
+          break;
+        case age < 40:
+          console.log("青年");
+          break;
+        case age < 60:
+          console.log("中年");
+          break;
+        case age < 100:
+          console.log("老年");
+          break;
+        default:
+          console.log("年龄输出错误");
+    }
+
+    //下面例子缺少 break 后，会接着执行后面的 switch 代码
+    switch (1) {
+        case 1:
+            console.log(1);
+        case 2:
+            console.log(2);
+        default:
+            console.log("default");
+    }
+
+    //while循环语句
+    //do/while，后条件判断语句，无论条件是否为真都会先进行循环体
+    let i = 1;
+    while(i<=10){
+        console.log("我喜欢你");
+        i++;
+    }
+
+    do{
+        console.log("我爱你");
+    }while(false)
+
+    //for循环语句
+    for(let i=1; i<=5; i++){
+        console.log("我喜欢你");
+    }
+
+    //for 的三个参数可以都省略或取几个
+    for(;;){
+        console.log("我喜欢你");
+        break;
+    }
+
+    //continue跳转语句
+    //continue 用于退出当前循环返回循环起始继续执行
+
+    //获取所有偶数，所有奇数使用 continue 跳过
+    for (let i = 1; i <= 10; i++) {
+        if (i % 2) continue;
+        console.log(i);
+    }
+
+    //break跳转语句
+    //break 用于退出当前循环
+
+    //获取三个奇数，超过时使用break退出循环
+    let count = 0,num = 3;
+    for (let i = 1; i <= 10; i++) {
+        if (i % 2) {
+            console.log(i);
+            if (++count == num) break;
+        }
+    }
+
+    //label 标签
+    //标签(label) 为程序定义位置，可以使用continue/break跳到该位置
+    flag1:while(true){
+        console.log("label 标签")
+        flag2:while (true) {
+            break flag1;
+        }
+    }
+
+    //return跳转语句
+    //跳出函数体，返回到主程序之中，不再往下执行函数体里面的语句
+    if(false) return 0;
+}
