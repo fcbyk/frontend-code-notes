@@ -1,11 +1,9 @@
 //在这里调用的函数会被导入的模块执行,即使没有全部导出
 export{functionObject, getSum, getSumDef}
 
-//issue 这里很模糊
 //在 JS 中函数也是对象,可以用变量接收
-//函数是Function构造函数创建的实例，下面的例子可以方便理解函数是对象
-//迷惑：new对象后会立即执行一次
-let functionObject = new Function("title='init'", "console.log(title)");
+//函数是Function构造函数创建的实例
+let functionObject = new Function("text", "console.log(text)");
 functionObject('在 JS 中函数也是对象');
 console.log(typeof functionObject); //function
 

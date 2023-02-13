@@ -1,4 +1,5 @@
 import * as BasicsNotes from "./Grammar/BasicsNotes.js";
-import * as FunctionNotes from "./Grammar/FunctionNotes.js"
+// import * as FunctionNotes from "./Grammar/FunctionNotes.js"
+import * as OONotes from "./Grammar/OONotes.js"
 
-FunctionNotes.functionObject();
+// console.log(BasicsNotes.hello.prototype)
