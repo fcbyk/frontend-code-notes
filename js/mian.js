@@ -1,3 +1,4 @@
-import * as note from "./Grammar/note.js";
+import * as BasicsNotes from "./Grammar/BasicsNotes.js";
+import * as FunctionNotes from "./Grammar/FunctionNotes.js"
 
-note.control();
+FunctionNotes.functionObject();

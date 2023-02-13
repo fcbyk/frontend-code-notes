@@ -1,6 +1,7 @@
+//命名导出
 export{
-    hello, strict, notStrict, variate, dataType, operator,
-    control
+    hello, strict, notStrict, variate, 
+    dataType, transition,operator,control
 }
 
 //语句结束符,换行或分号
