@@ -599,3 +599,105 @@ console.log(dog3.colors); // red,green,blue
 // 在创建子类型的实例时，不能向父类型的构造函数中传递参数
 // 实际上，应该说是没有办法在不影响所有对象实例的情况下，给父类型的构造函数传递参数
 // 从而可以修改父类型中属性的值, 在创建构造函数的时候就确定一个值
+
+
+// 经典继承
+// 为了解决原型链继承中存在的问题, 开发人员提供了一种新的技术: constructor stealing
+// (有很多名称: 借用构造函数或经典继承或伪造对象), steal 是偷窃的意思, 但是这里可以翻译成借用
+// 经典继承的做法非常简单: 在子类型构造函数的内部调用父类型构造函数
+
+// 创建AnimalC的构造函数
+function AnimalC(age) {
+    this.colors = ['red', 'green'];
+    this.age = age;
+}
+
+// 创建DogC的构造函数
+function DogC(age) {
+    // 继承AnimalC的属性
+    // 也可以传递参数
+    AnimalC.call(this, age);
+
+    // 给自己的属性赋值
+    this.name = 'ZHANG';
+}
+
+// 创建DogC对象
+let dog4 = new DogC();
+let dog5 = new DogC(10);
+
+console.log(dog4.colors);   // red,green
+console.log(dog5.colors);   // red,green
+dog4.colors.push('blue');
+console.log(dog4.colors);   // red,green,blue
+console.log(dog5.colors);   // red,green
+console.log(dog5.age);      // 10
+
+// 我们通过在 DogC 构造函数中, 使用 call 函数, 将 this 传递进去
+// 这个时候, 当 AnimalC 中有相关属性初始化时, 就会在 this 对象上进行初始化操作
+// 这样就实现了类似于继承 AnimalC 属性的效果
+
+// 经典继承的问题
+// 对于经典继承理解比较深入, 你已经能发现: 经典继承只有属性的继承, 无法实现方法的继承
+// 因为调用 call 函数, 将 this 传递进去, 只能将父构造函数中的属性初始化到 this 中
+// 但是如果函数存在于父构造函数的原型对象中, this 中是不会有对应的方法的
+
+// 组合继承
+// 如果你认识清楚了上面两种实现继承的方式存在的问题, 就可以很好的理解组合继承了
+// 组合继承(combination inheritance, 有时候也称为伪经典继承)
+// 组合继承就是发挥原型链和经典继承各自的优点来完成继承的实现
+// 使用原型链实现对原型属性和方法的继承
+// 通过经典继承实现对实例属性的继承, 以及可以在构造函数中传递参数
+// 1.创建构造函数的阶段
+// 1.1.创建AnimalD的构造函数
+function AnimalD(age) {
+    this.age = age;
+    this.colors = ['red', 'green'];
+}
+
+// 1.2.给AnimalD添加方法
+AnimalD.prototype.AnimalDFunction = function () {
+    console.log('Hello AnimalD');
+};
+
+// 1.3.创建DogD的构造函数
+function DogD(name, age) {
+    AnimalD.call(this, age);
+    this.name = name;
+}
+
+// 1.4.给DogD的原型对象重新赋值
+DogD.prototype = new AnimalD(0);
+
+// 1.5.给DogD添加方法
+DogD.prototype.DogDFunction = function () {
+    console.log('Hello DogD');
+};
+
+// 2.验证和使用的代码
+// 2.1.创建DogD对象
+let dog6 = new DogD('zcoder', 18);
+let dog7 = new DogD('www', 38);
+
+// 2.2.验证属性
+console.log(dog6.name + '-' + dog6.age); // zcoder-18
+console.log(dog7.name + '-' + dog7.age); // www-38
+
+// 2.3.验证方法的调用
+dog6.AnimalDFunction(); // Hello AnimalD
+dog6.DogDFunction(); // Hello DogD
+
+// 2.4.验证引用属性的问题
+dog6.colors.push('blue');
+console.log(dog6.colors); // red,green,blue
+console.log(dog7.colors); // red,green
+
+// 组合继承是 JavaScript 最常用的继承模式之一
+// 如果你理解到这里, 点到为止, 那么组合来实现继承只能说问题不大, 但是它依然不是很完美
+
+// 组合继承最大的问题就是无论在什么情况下, 都会调用两次父类构造函数.
+// 一次在创建子类原型的时候
+// 另一次在子类构造函数内部(也就是每次创建子类实例的时候)
+// 另外, 值得注意的是, 所有的子类实例事实上会拥有两份父类的属性
+// 一份在当前的实例自己里面(也就是 dog6 本身的), 另一份在子类对应的原型对象中(也就是 dog6.proto里面)
+// 当然, 这两份属性我们无需担心访问出现问题, 因为默认一定是访问实例本身这一部分的
