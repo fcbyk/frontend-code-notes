@@ -77,7 +77,7 @@ person2[200]();
 // 工厂模式是一种非常常见的设计模式, 这种模式抽象了创建具体对象的过程.
 // 因为 JavaScript 中没法创建类, 开发人员就发明了一种函数, 用函数来封装以特定接口创建对象的细节
 function createPerson(name, age, height) {
-    var o = new Object();
+    let o = new Object();
     o.name = name;
     o.age = age;
     o.height = height;
@@ -282,7 +282,7 @@ PersonD.prototype = {
 // 而我们这里相当于给 prototype 重新赋值了一个对象, 那么这个新对象的 constructor 属性, 会指向 Object 构造函数, 而不是 PersonD 构造函数了
 
 // 创建PersonD对象
-var person9 = new PersonD();
+let person9 = new PersonD();
 
 console.log(person9.constructor === Object); // true
 console.log(person9.constructor === PersonD); // false
@@ -418,8 +418,8 @@ PersonI.prototype = {
 };
 
 // 创建对象
-var person15 = new PersonI('张三', 20, 188);
-var person16 = new PersonI('李四', 22, 203);
+let person15 = new PersonI('张三', 20, 188);
+let person16 = new PersonI('李四', 22, 203);
 
 // 测试是否共享了函数
 console.log(person15.sayHello == person16.sayHello); // true
@@ -701,3 +701,193 @@ console.log(dog7.colors); // red,green
 // 另外, 值得注意的是, 所有的子类实例事实上会拥有两份父类的属性
 // 一份在当前的实例自己里面(也就是 dog6 本身的), 另一份在子类对应的原型对象中(也就是 dog6.proto里面)
 // 当然, 这两份属性我们无需担心访问出现问题, 因为默认一定是访问实例本身这一部分的
+
+
+// 原型式继承
+// 原型式继承的思想和渊源
+// 这种模式要从道格拉斯·克罗克福德（Douglas Crockford, 著名的前端大师, JSON 的创立者）在 2006 年写的一篇文章说起: Prototypal Inheritance in JavaScript(在 JS 中使用原型式继承)
+// 在这篇文章中, 它介绍了一种继承方法, 而且这种继承方法不是通过构造函数来实现的.
+// 为了理解这种方式, 我们先再次回顾一下 JavaScript 想实现继承的目的: 重复利用另外一个对象的属性和方法
+
+// 原型式继承的核心函数
+// 封装objectA()函数
+function objectA(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+// 在 object()函数内部, 先创建一个临时的构造函数
+// 然后将传递的对象作为这个构造函数的原型
+// 最后返回了这个临时类型的一个新的实例
+// 事实上, object()对传入的对象执行了一次浅复制（注意不是浅拷贝）
+// 理解为创建了一个o类型的空实例对象，空实例对象可以用o对象的属性和方法
+
+// 原型式继承的使用
+// 使用原生式继承
+let dog8 = {
+    name: '小明',
+    colors: ['red', 'green'],
+};
+
+// 通过dog8去创建另外一个对象
+let dog9 = objectA(dog8);
+dog9.name = '小小明';
+dog9.colors.push('blue');
+
+console.log(dog8.name); // 小明
+console.log(dog8.colors); // red,green,blue
+
+console.log(dog9.name); // 小小明
+console.log(dog9.colors); // red,green,blue
+
+console.log(dog8); 
+console.log(dog9);
+
+// 这种方式和我们传统意义上理解的继承有些不同. 它做的事情是通过一个对象去创建另外一个对象.(利用 dog8 去创建 dog9)
+// 当然, dog9 中继承过来的属性是放在了自己的原型对象中的.
+// 也可以给 dog9 自己再次添加 name 属性, 这个时候 name 才是在实例本身中.
+// 但是如果是修改或者添加引用类型的内容, 还是会引起连锁反应.
+// 可能暂时你看不到这些代码的意义, 但是这些代码是我们后续最终方案的前提思想, 所以先看看和练习一下这些代码.
+
+// 针对这种思想, ES5 中新增了 Object.create()方法来规范化了原型式继承
+// create是Object构造函数对象的一个属性，这个属性也是一个函数对象，所以可以调用
+// 也就是上面的代码可以修改成这样(只是将 object 函数修改成了 Object.create)
+let dog10 = {
+    name: '小明',
+    colors: ['red', 'green'],
+};
+
+let dog11 = Object.create(dog10);
+dog11.name = '小小明';
+dog11.colors.push('blue');
+
+console.log(dog10.name); // 小明
+console.log(dog10.colors); // red,green,blue
+
+console.log(dog11.name); // 小小明
+console.log(dog11.colors); // red,green,blue
+
+console.log(dog10); 
+console.log(dog11);
+
+// Object.create()还可以传入第二个参数
+// 第二个参数用于每个属性的自定义描述
+let dog12 = Object.create(dog10,{
+    name:{
+        value:"语雀"
+    }
+})
+console.log(dog12); 
+
+// 原型式继承的的优点和缺点
+// 如果我们只是希望一个对象和另一个对象保持类似的情况下, 原型式继承完全可以胜任, 这是它的优势.
+// 但是, 原型式继承依然存在属性共享的问题, 就像使用原型链一样
+
+// 寄生式继承
+// 寄生式继承的思想
+// 寄生式(Parasitic)继承是与原型式继承紧密相关的一种思想, 并且同样由道格拉斯·克罗克福德(Douglas Crockford)提出和推广的
+// 寄生式继承的思路是结合原型类继承和工厂模式的一种方式
+// 即创建一个封装继承过程的函数, 该函数在内部以某种方式来增强对象, 最后再将这个对象返回
+
+// 寄生式函数多增加了一个核心函数
+// 封装objectB函数
+function objectB(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+
+// 封装创建新对象的函数
+function createAnother(original) {
+    let clone = objectB(original);
+    clone.sayHello = function () {
+        console.log('Hello JavaScript');
+    };
+    return clone;
+}
+
+// 我们来使用一下寄生式继承
+// person17对象
+let person17 = {
+    name: 'zcoder',
+    colors: ['red', 'green'],
+};
+
+// 新的对象
+let person18 = createAnother(person17);
+person18.sayHello();
+
+console.log(person17)
+console.log(person18)
+
+// 我们基于 person 对象, 创建了另外一个对象 person1
+// 在最新的 person1 对象中, 不仅会拥有 person 的属性和方法, 而且还有自己定义的方法
+
+// 寄生式继承存在的问题:
+// 寄生式继承和原型式继承存在一样的问题, 引用类型会共享 (因为是在原型式继承基础上的一种封装)
+// 另外寄生式继承还存在函数无法复用的问题, 因为每次 createAnother 一个新的对象, 都需要重新定义新的函数(和之前的工厂函数一样)
+
+
+// 寄生组合式继承
+
+// 现在我们来回顾一下之前提出的比较理想的组合继承
+// 组合继承是比较理想的继承方式, 但是存在两个问题
+// 问题一: 构造函数会被调用两次: 一次在创建子类型原型对象的时候, 一次在创建子类型实例的时候
+// 问题二: 父类型中的属性会有两份: 一份在原型对象中, 一份在子类型实例中
+
+// 事实上, 我们现在可以利用寄生式继承将这两个问题给解决掉
+// 你需要先明确一点: 当我们在子类型的构造函数中调用父类型.call(this, 参数)这个函数的时候, 就会将父类型中的属性和方法复制一份到了子类型中. 所以父类型本身里面的内容, 我们不再需要
+// 这个时候, 我们还需要获取到一份父类型的原型对象中的属性和方法
+// 能不能直接让子类型的原型对象 = 父类型的原型对象呢?
+// 不要这么做, 因为这么做意味着以后修改了子类型原型对象的某个引用类型的时候, 父类型原生对象的引用类型也会被修改.
+// 我们使用前面的寄生式思想就可以了.
+
+// 寄生组合式的核心代码
+// 定义object函数
+function objectC(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+
+// 定义寄生式核心函数
+function inhreitPrototype(subType, superType) {
+    // let prototype = objectC(superType.prototype);
+    // 可以使用create函数代替
+    let prototype = Object.create(superType.prototype);
+    prototype.constructor = subType;
+    subType.prototype = prototype;
+}
+
+// 定义AnimalE构造函数
+function AnimalE(age) {
+    this.age = age;
+    this.colors = ['red', 'green'];
+}
+
+// 给AnimalE添加方法
+AnimalE.prototype.AnimalEFunction = function () {
+    alert('Hello AnimalE');
+};
+
+// 定义DogE构造函数
+function DogE(name, age) {
+    AnimalE.call(this, age);
+    this.name = name;
+}
+
+// 使用寄生组合式核心函数
+inhreitPrototype(DogE, AnimalE);
+
+// 给DogE添加方法
+DogE.prototype.DogEFunction = function () {
+    console.log('Hello DogE');
+};
+
+let dog13 = new DogE("张三疯",18);
+console.log(dog13)
+console.log(dog13.__proto__)
+
+// 这种方式的高效体现在现在它只调用了一次 Animal 的构造函数
+// 并且也避免了在原型上面多出的多余属性, 而且原型之间不会产生任何的干扰(子类型原型和父类型原型之间)
+// 在 ES5 中, 普遍认为寄生组合式继承是最理想的继承范式
