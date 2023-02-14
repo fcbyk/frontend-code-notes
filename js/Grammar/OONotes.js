@@ -428,3 +428,174 @@ console.log(person15.sayHello == person16.sayHello); // true
 person15.hobby.push('tennis');
 console.log(person15.hobby);
 console.log(person16.hobby);
+
+
+// 原型链
+// 继承是面向对象中非常重要的特性
+// JS实现继承主要是依靠原型链来实现的
+
+// 我们知道, 可以通过 PersonI.prototype = {}的方式来重写原型对象
+// 假如, 我们后面赋值的不是一个{}, 而是另外一个类型的实例, 结果会是怎么样呢
+// 显然，此时的原型对象将包含一个指向另一个原型的指针，相应地，另一个原型中也包含着一个指向另一个构造函数的指针
+// 假如另一个原型又是另一个类型的实例，那么上述关系依然成立，如此层层递进，就构成了实例与原型的链条。这就是所谓原型链的基本概念
+
+// 1.创建AnimalA的构造函数
+function AnimalA() {
+    this.animalProperty = '动物';
+}
+
+// 2.给AnimalA的原型中添加一个方法
+AnimalA.prototype.animalFunction = function () {
+    console.log(this.animalProperty);
+};
+
+// 3.创建DogA的构造函数
+function DogA() {
+    this.dogProperty = '狗';
+}
+
+// 4.给DogA的原型对象重新赋值
+DogA.prototype = new AnimalA();
+
+// 5.给DogA添加属于自己的方法
+DogA.prototype.dogFunction = function () {
+    console.log(this.dogProperty);
+};
+
+// 6.创建DogA的实例
+let dog1 = new DogA();
+dog1.animalFunction(); //动物
+dog1.dogFunction(); //狗
+
+// 创建 dog1 对象, dog1 对象会有自己的属性, dogProperty
+// 另外, dog1 对象有一个 proto 指向 DogA 的原型
+// DogA 的原型是谁呢? 就是我们之前的 new AnimalA(AnimalA 的一个实例), 所以会指向它
+
+// constructor 问题
+console.log(dog1)
+console.log(dog1.constructor) //构造器为 AnimalA, 在原型链上搜索constructor
+
+// 在DogA的新原型对象上添加构造器属性
+Object.defineProperty(DogA.prototype,'constructor', {
+    enumerable: false,
+    value: DogA,
+});
+
+console.log(dog1)
+console.log(dog1.constructor) //DogA
+
+
+// 原型和实例的关系
+// 如果我们希望确定原型和实例之间的关系, 有两种方式
+
+// instanceof 操作符
+// 只要用这个操作符来测试实例的原型链中出现过的构造函数，结果就会返回 true
+console.log(dog1 instanceof Object); // true
+console.log(dog1 instanceof AnimalA); // true
+console.log(dog1 instanceof DogA); // true
+
+// isPrototypeOf()方法
+// 只要是原型链中出现过的原型，都可以说是该原型链所派生的实例的原型
+// 因此 isPrototypeOf()方法也会返回 true
+console.log(Object.prototype.isPrototypeOf(dog1)); // true
+console.log(AnimalA.prototype.isPrototypeOf(dog1)); // true
+console.log(DogA.prototype.isPrototypeOf(dog1)); // true
+
+// 查看原型链
+console.log(dog1)                                           // DogA{}
+console.log(dog1.__proto__)                                 // AnimalA{}
+console.log(dog1.__proto__.__proto__)                       // {}    注: object对象前面没有名字
+console.log(dog1.__proto__.__proto__.__proto__)             // {}
+console.log(dog1.__proto__.__proto__.__proto__.__proto__)   // null
+// or
+console.log(dog1)
+console.log(DogA.prototype)     
+console.log(DogA.prototype.__proto__)
+console.log(DogA.prototype.__proto__.__proto__)
+console.log(DogA.prototype.__proto__.__proto__.__proto__)
+
+// 总的来说,有一点点乱
+// 狗实例 -> 动物实例(狗的原型) -> object实例(动物的原型) -> object原型 -> null
+// 对象分实例对象和原型对象, 两种身份混合就有一点点乱
+
+// 查看一下浏览器内置的原型链
+console.log(window)                                                         // Window{}
+console.log(window.__proto__)                                               // Window{}
+console.log(window.__proto__.__proto__)                                     // WindowProperties{} 
+console.log(window.__proto__.__proto__.__proto__)                           // EventTarget{}
+console.log(window.__proto__.__proto__.__proto__.__proto__)                 // {}
+console.log(window.__proto__.__proto__.__proto__.__proto__.__proto__)       // null
+
+console.log(document)                                          
+console.log(document.__proto__)
+console.log(document.__proto__.__proto__)
+console.log(document.__proto__.__proto__.__proto__)
+console.log(document.__proto__.__proto__.__proto__.__proto__)
+console.log(document.__proto__.__proto__.__proto__.__proto__.__proto__)
+console.log(document.__proto__.__proto__.__proto__.__proto__.__proto__.__proto__)
+
+// 关于原型链,在谷歌浏览器控制台查看
+// 关于谷歌浏览器的对象的内部属性__proto__, 使用了 [[Prototype]] 代替
+// 一直展开这个, 会发现到object原型对象时, 就没有 [[Prototype]] 属性, 但有__proto__属性
+// 如果展开__proto__属性, 则重复了展开[[Prototype]]属性看到的原型链, 最后又回到object, __proto__属性指向null
+
+// 猜测
+// object的__proto__属性记录了当前对象的原型链信息
+// 我们写的 window.__proto__, 实际上是去object对象的__proto__属性搜索
+// 以上为猜测, 未通过实践验证
+
+// 注意构造函数的 Prototype 和 [[Prototype]] 是不一样的
+// [[Prototype]] 为隐式原型 __proto__
+// 函数的隐式原型暂时不讨论, 容易晕
+// 知道函数的构造函数是Function()即可
+
+
+// 原型链存在的问题
+// 原型链存在最大的问题是关于引用类型的属性.
+// 通过上面的原型实现了继承后, 子类的 DogA 对象继承了(可以访问)AnimalA 实例中的属性(animalProperty).
+// 但是如果这个属性是一个引用类型(比如数组或者其他引用类型), 就会出现问题.
+
+// 引用类型的问题代码:
+// 1.定义AnimalB的构造函数
+function AnimalB() {
+    this.colors = ['red', 'green'];
+}
+
+// 2.给AnimalB添加方法
+AnimalB.prototype.animalFunction = function () {
+    alert(this.colors);
+};
+
+// 3.定义DogB的构造函数
+function DogB() {
+    this.dogProperty = 'DogB';
+}
+
+// 4.给DogB赋值新的原型对象
+DogB.prototype = new AnimalB();
+
+// 5.给DogB添加方法
+DogB.prototype.personFunction = function () {
+    alert(this.dogProperty);
+};
+
+// 6.创建DogB对象, 并且调用方法
+let dog2 = new DogB();
+let dog3 = new DogB();
+
+console.log(dog2.colors); // red,green
+console.log(dog3.colors); // red,green
+
+dog2.colors.push('blue');
+
+console.log(dog2.colors); // red,green,blue
+console.log(dog3.colors); // red,green,blue
+
+// 修改了 dog2 中的 colors 属性, 添加了一个新的颜色 blue
+// 再次查看两个对象的 colors 属性, 会发现 dog3 的 colors 属性也发生了变化
+// 两个实例应该是相互独立的, 这样的变化如果我们不制止将会在代码中引发一些列问题.
+
+// 原型链的其他问题
+// 在创建子类型的实例时，不能向父类型的构造函数中传递参数
+// 实际上，应该说是没有办法在不影响所有对象实例的情况下，给父类型的构造函数传递参数
+// 从而可以修改父类型中属性的值, 在创建构造函数的时候就确定一个值
