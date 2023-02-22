@@ -1,0 +1,11 @@
+{
+	"生成立即执行函数": {
+	"scope": "javascript,typescript",
+	"prefix": "imfunction",
+	"body": [
+		"(function(){",
+		"\t$1",
+		"})();"
+	]
+	}
+}

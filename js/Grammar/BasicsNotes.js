@@ -328,7 +328,7 @@ function operator(){
     if (a && !b) {
         console.log('表达式成立');
     }
-
+    
     //优先级
     //下列中因为 && 的优先级高所以结果是 true
     console.log(true || false && false);
@@ -539,3 +539,114 @@ function control(){
     //跳出函数体，返回到主程序之中，不再往下执行函数体里面的语句
     if(false) return 0;
 }
+
+
+// 解构赋值（左边赋值给右边）
+// 解构是一种更简洁的赋值特性
+(function(){
+    let info = {name:'解构赋值',url:'houdunren.com'}; 
+    let {name:n,url:u} = info    // 注意右边才是声明的变量
+    console.log(n); // 解雇赋值
+
+    //如果属性名与变量相同可以省略属性定义
+    let {name,url} = {name:'后盾人',url:'hao123.com'};
+    console.log(name); // 后盾人
+})();
+
+// 函数返回值直接解构到变量
+(function(){
+    function hd() {
+        return {
+            name: '函数返回值',
+            url: '123456'
+        };
+    }
+    let {name: n,url: u} = hd();
+    console.log(n);
+})();
+
+// 函数传参
+(function(){
+    function hd({ name: a, age: b}) {
+        console.log(a, b); 
+    }
+    hd({ name: "向军", age: 18 });
+
+    // 同名简写
+    function hh({ name, age }) {
+        console.log(name, age); 
+    }
+    hh({ name: "王五", age: 20 });
+})();
+
+// 系统函数解构练习，这没有什么意义只是加深解构印象
+(function(){
+    const {random: a} =Math;
+    console.log(a());
+    
+    const {random} =Math;
+    console.log(random());
+})();
+
+// 可以直接使用变量赋值对象属性
+// 和上面不同，这次是又右往左赋值
+(function(){
+    let name = "后盾人",url = "houdunren.com";
+    //标准写法如下
+    let hd = { aa: name, bb: url };
+    console.log(hd);
+
+    //如果属性和值变量同名可以写成以下简写形式
+    let opt = { name, url };
+    console.log(opt);
+})();
+
+// 嵌套解构
+(function(){
+    const hd = {
+        name:'后盾人',
+        lessons:{
+          title:'JS'
+        }
+    }
+    const {name,lessons:{title}}  = hd;
+    console.log(name,title);
+})();
+
+// 默认值
+(function(){
+    // 为变量设置默认值
+    let {name,url,user='向军大叔'}= {name:'后盾人',url:'houdunren.com'};
+    console.log(name,user);
+
+    // 使用默认值特性可以方便的对参数预设
+    function createElement(options) {
+        let {
+          width = '200px',
+          height = '100px',
+          backgroundColor = 'red'
+        } = options;
+      
+        const h2 = document.createElement('h2');
+        h2.style.width = width;
+        h2.style.height = height;
+        h2.style.backgroundColor = backgroundColor;
+        document.body.appendChild(h2);
+    }
+    createElement({
+        backgroundColor: 'green'
+    });
+})();
+
+// 数组的解构赋值
+(function(){
+    function hd([a, b]) {
+        console.log(a);
+        console.log(b);
+    }
+    hd(['后盾人', '123']);
+
+    // 设置默认值
+    let [name, site = 'hdcms'] = ['后盾人'];
+    console.log(site); 
+})();
