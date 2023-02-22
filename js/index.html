@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+</head>
+<body>
+    <!-- JavaScript脚本引入HTML文档的方式 -->
+    <!-- 内嵌脚本 -->
+    <script>
+        console.log("Hello World");
+    </script>
+
+    <!-- 外部引入，通过设置 src 属性引入外部 js 文件 -->
+    <!-- 引入外部文件在标签体内的脚本不会执行，下面的语句不会执行 -->
+    <Script src="mian.js" type="module">
+        console.log("控制台不会输出这一行");
+    </Script>
+
+    <!-- 行内形式，写在HTML标签里面-->
+    <input 
+    type="button" 
+    value="唐伯虎" 
+    onclick="alert('秋香姐');" 
+    style="display: none;"
+    >
+</body>
+</html>
