@@ -1,1 +1,3 @@
-import * as arr from "./api/web/dom/studyElement.js"
+import calculator from "./demo/calculator.js";
+
+calculator.launch();
