@@ -1,1 +1,1 @@
-import * as arr from "./api/web/bom/studyStorage.js"
+import * as arr from "./api/web/dom/studyElement.js"
