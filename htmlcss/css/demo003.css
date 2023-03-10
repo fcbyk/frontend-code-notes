@@ -1,0 +1,80 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    height: 100vh;
+    background: linear-gradient(rgb(89, 131, 204),rgb(213, 75, 139));
+}
+a{
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(35, 35, 35);
+    font-weight: 600;
+}
+a:hover{
+    color: rgba(227, 64, 162, 0.83);
+}
+li{
+    list-style: none;
+    margin: 0 15px;  
+}
+body,nav,#uu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav{
+    position: relative;
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 50px;
+    /* transition: all 0.3s ease-in-out; */
+}
+#uu{
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    /* background-color: brown; */
+    transition: all 0.5s ease-in-out;
+}
+input:checked ~#uu{
+    width: 350px;
+}
+#xx{
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
+}
+span{
+    position: absolute;
+    left: 25px;
+    width: 30px;
+    height: 4px;
+    border-radius: 15px;
+    background-color: #999;
+
+    /* 这个函数没明白 */
+    top: calc(50% - 10px);
+
+    pointer-events: none;
+}
+
+/* 这个选择器还没弄明白 */
+span:nth-child(3) {
+    top: calc(50% + 6px);
+}
+
+input:checked ~ span:nth-child(2) {
+    top: calc(50% - 2px);
+    transform: rotate(-45deg);
+    background-color: #fb7299;
+    transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s;
+}
+input:checked ~ span:nth-child(3) {
+    top: calc(50% - 2px);
+    transform: rotate(45deg);
+    background-color: #fb7299;
+    transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s;
+}

@@ -1,0 +1,44 @@
+<!-- HTML元素可以互相嵌套包裹，即元素存在父子级关系 -->
+<!DOCTYPE html> <!-- 声明为 HTML 文档 -->
+<html lang="en"> <!-- lang:网页的语言，如 en/zh 等，非必选项目 -->
+<head>
+    <!-- 一般head元素不可见，body元素可见 -->
+    <!-- head元素里面为文档说明部分，对搜索引擎提供信息或加载 CSS、JS 等 -->
+
+    <!-- meta 元数据元素，DOM 接口 HTMLMetaElement -->
+    <!-- 如果设置了 charset 属性，<meta> 元素是一个字符集声明，告诉文档使用哪种字符编码 -->
+    <meta charset="UTF-8">
+
+    <!-- 如果设置了 http-equiv 属性，<meta> 元素则是编译指令，提供的信息与类似命名的 HTTP 头部相同。 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 如果设置了 name 属性，<meta> 元素提供的是文档级别（document-level）的元数据，应用于整个页面。 -->
+    <!-- content属性，包含http-equiv 或name 属性的值，具体取决于所使用的值-->
+    <!-- name 和 content 属性一起使用，以名 - 值对的方式给文档提供元数据，其中 name 作为元数据的名称，content 作为元数据的值 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 与页面内容相关的关键词，使用逗号分隔。 -->
+    <meta name="keyword" content="笔记,html,前端" />
+
+    <!-- description：一段简短而精确的、对页面内容的描述。一些浏览器，比如 Firefox 和 Opera，将其用作书签的默认描述 -->
+    <meta name="description" content="html笔记，前端笔记" />
+
+    <title>html学习</title> <!-- 网页标题 -->
+</head>
+<body><!-- body元素，页面主体内容 -->
+    
+    <!-- 文本元素 -->
+    <div>
+        <!-- h标签，单词为 head 简写-->
+        <h1>标题一共六级选,</h1>
+        <h2>文字加粗一行显。</h2>
+        <h3>由大到小依次减，</h3>
+        <h4>从重到轻随之变。</h4>
+        <h5>语法规范书写后，</h5>
+        <h6>具体效果刷新见。</h6>
+
+        <!-- p标签，p 指paragraph，意为段落-->
+        <p>我是一个段落标签</p>
+    </div>
+</body>
+</html>

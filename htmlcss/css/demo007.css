@@ -1,0 +1,110 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    bottom: 0;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: azure; */
+}
+
+.shell{
+    width: 900px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    /* border: 2px rgb(112, 112, 112) solid; */
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.images{
+    width: 300%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    left: 0;
+    transition: 0.3s;
+}
+
+.img{
+    width: 100%;
+    background-size: cover;
+    /* background-size属性指定背景图片大小 */
+    /* cover属性值：此时会保持图像的纵横比并将图像缩放成将完全覆盖背景定位区域的最小大小 */
+}
+
+.img:nth-child(1){
+    background-image: url("https://user-images.githubusercontent.com/101487905/221465256-be2c0045-0867-438e-9e4c-e281570ccfcf.jpg");
+}
+
+.img:nth-child(2){
+    background-image: url("https://user-images.githubusercontent.com/101487905/221465262-69b504d0-df3e-4723-8f43-db396656a352.jpg");
+}
+
+.img:nth-child(3){
+    background-image: url("https://user-images.githubusercontent.com/101487905/221465269-755bee8a-7c95-428f-b634-eca4a66795f3.jpg");
+}
+
+.min-images{
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 20px;
+    width: 40%;
+    z-index: 2;
+    right: 10%;
+}
+
+.min{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-size: cover;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-position: -20px 0;
+}
+
+.min:nth-child(1){
+    background-image: url("https://user-images.githubusercontent.com/101487905/221465256-be2c0045-0867-438e-9e4c-e281570ccfcf.jpg");
+}
+
+.min:nth-child(2){
+    background-image: url("https://user-images.githubusercontent.com/101487905/221465262-69b504d0-df3e-4723-8f43-db396656a352.jpg");
+}
+
+.min:nth-child(3){
+    background-image: url("https://user-images.githubusercontent.com/101487905/221465269-755bee8a-7c95-428f-b634-eca4a66795f3.jpg");
+}
+
+.button{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+    /* user-select 控制用户能否选中文本 */
+}
+
+.button-left,
+.button-right {
+    font-size: 50px;
+    /* background-color: rgba(149, 149, 149, 0.7); */
+    padding: 0 20px;
+    cursor: pointer;
+    line-height: 500px;
+    color: rgb(239, 239, 239);
+}
+
+.button-left:hover,
+.button-right:hover {
+    color: rgba(248, 248, 9, 0.985);
+}
