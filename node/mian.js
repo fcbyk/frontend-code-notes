@@ -4,3 +4,4 @@
 
 // 导入模块会自动执行模块里面的代码
 // require("./api/builtin/studyhttp.js")
+require("./api/third/studyexpress.js")

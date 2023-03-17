@@ -14,7 +14,7 @@ exports.fsread = function(){
   // 参数1：读取文件的存放路径
   // 参数2：读取文件时候采用的编码格式，一般默认指定 utf8
   // 参数3：回调函数，拿到读取失败和成功的结果  err  dataStr
-  fs.readFile(__dirname+'/file1.txt', 'utf8', function(err, dataStr) {
+  fs.readFile(__dirname+'../../../static/file.txt', 'utf8', function(err, dataStr) {
     // 打印失败的结果
     // 如果读取成功，则 err 的值为 null
     // 如果读取失败，则 err 的值为 错误对象，dataStr 的值为 undefined
@@ -25,7 +25,7 @@ exports.fsread = function(){
   })
 
   // 判断文件是否读取成功
-  fs.readFile(__dirname+'/file1.txt', 'utf8', function(err, dataStr) {
+  fs.readFile(__dirname+'../../../static/file.txt', 'utf8', function(err, dataStr) {
     if (err) {
       return console.log('读取文件失败！' + err.message)
     }
@@ -38,7 +38,7 @@ exports.fswrite = function(){
   // 参数1：表示文件的存放路径
   // 参数2：表示要写入的内容
   // 参数3：回调函数
-  fs.writeFile(__dirname+'/file1.txt', 'ok123', function(err) {
+  fs.writeFile(__dirname+'../../../static/file.txt', '12345678', function(err) {
     // 如果文件写入成功，则 err 的值等于 null
     // 如果文件写入失败，则 err 的值等于一个 错误对象
     // console.log(err)
