@@ -1,2 +1,4 @@
 // import calculator from "./demo/calculator.js";
-import * as study from "./api/web/ajax/studyaxios.js"
+import * as study from "./api/basics/studyPromise.js"
+
+study.test3()
