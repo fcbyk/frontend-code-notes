@@ -12,9 +12,9 @@ document.body.innerHTML = `<style>
 <div id="result"></div>`
 
 // 获取展示结果的div元素
-const result = document.getElementById('result');
+export const result = document.getElementById('result');
 // 按钮绑定事件
-const button = document.getElementsByTagName('button')[0];
+export const button = document.getElementsByTagName('button')[0];
 button.onclick = function () {
     // 创建XMLHttpRequest实例对象
     const xhr = new XMLHttpRequest();
