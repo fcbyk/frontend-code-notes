@@ -11,4 +11,7 @@
 // sql.deleteStudent();
 // sql.selectStudent();
 // sql.insertSetStudent();
-require('./servers/studyAjax.js')
+require('./servers/studyHTTP.js')
+// const hh = require('./api/builtin/studypath.js')
+
+// hh.pathjoin()
