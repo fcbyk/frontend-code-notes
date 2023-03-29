@@ -1,6 +1,7 @@
 {
   "pages":[
-    "pages/api/api"
+    "pages/index/index",
+    "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -8,6 +9,5 @@
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle":"black"
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json"
 }
