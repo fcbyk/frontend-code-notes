@@ -1,6 +1,8 @@
 // 导入path模块
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
 
@@ -22,20 +24,13 @@ module.exports = {
           // 匹配哪些文件
           test: /\.css$/,
           // 使用哪些loader进行处理,use数组的执行顺序是从右往左，从下到上
-          use: [
-              "style-loader",
-              "css-loader"
-          ]
+          use: [MiniCssExtractPlugin.loader,"css-loader"]
         },
         {
           // 配置less的loader
           test: /\.less$/,
-          use: [
-              "style-loader",
-              "css-loader",
-              // less-loader能将less文件编译成css文件
-              "less-loader"
-          ]
+          // less-loader能将less文件编译成css文件
+          use: [MiniCssExtractPlugin.loader,"css-loader","less-loader"]
         }
     ]
   },
@@ -47,7 +42,15 @@ module.exports = {
       new HtmlWebpackPlugin({
         // 复制"./src/index.html"文件，并自动引入打包输出的所有资源(js/css)
         template: "./src/index.html"
-      })
+      }),
+
+      // 提取css成单独文件
+      new MiniCssExtractPlugin({
+        // 定义输出文件名和目录
+        filename: "css/style.css",
+      }),
+      // css压缩
+      new CssMinimizerPlugin()
   ],
 
   // 打包模式 development | production
