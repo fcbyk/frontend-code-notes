@@ -1,5 +1,6 @@
 // 导入path模块
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
@@ -42,6 +43,11 @@ module.exports = {
   // plugins的配置
   plugins: [
       // 详细plugins的配置
+      // html-webpack-plugin插件：会自动创建一个空的html文件，并自动引入打包输出的所有资源(js/css)
+      new HtmlWebpackPlugin({
+        // 复制"./src/index.html"文件，并自动引入打包输出的所有资源(js/css)
+        template: "./src/index.html"
+      })
   ],
 
   // 打包模式 development | production
