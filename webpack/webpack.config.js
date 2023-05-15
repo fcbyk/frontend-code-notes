@@ -53,6 +53,14 @@ module.exports = {
       new CssMinimizerPlugin()
   ],
 
+  // 开发服务器
+  devServer: {
+    host: "localhost", // 启动服务器域名
+    port: "80", // 启动服务器端口号
+    open: true, // 是否自动打开浏览器
+  },
+
   // 打包模式 development | production
   mode: "production"
+  // mode: "development"
 };
