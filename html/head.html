@@ -1,8 +1,11 @@
 <!-- HTML元素可以互相嵌套包裹，即元素存在父子级关系 -->
+
 <!DOCTYPE html> <!-- 声明为 HTML 文档 -->
+
 <html lang="en"> <!-- lang:网页的语言，如 en/zh 等，非必选项目 -->
-<head>
-    <!-- 一般head元素不可见，body元素可见 -->
+
+<head hello="自定义属性"><!-- 一般head元素不可见，body元素可见 -->
+    
     <!-- head元素里面为文档说明部分，对搜索引擎提供信息或加载 CSS、JS 等 -->
 
     <!-- meta 元数据元素，DOM 接口 HTMLMetaElement -->
@@ -23,22 +26,26 @@
     <!-- description：一段简短而精确的、对页面内容的描述。一些浏览器，比如 Firefox 和 Opera，将其用作书签的默认描述 -->
     <meta name="description" content="html笔记，前端笔记" />
 
-    <title>html学习</title> <!-- 网页标题 -->
-</head>
-<body><!-- body元素，页面主体内容 -->
-    
-    <!-- 文本元素 -->
-    <div>
-        <!-- h标签，单词为 head 简写-->
-        <h1>标题一共六级选,</h1>
-        <h2>文字加粗一行显。</h2>
-        <h3>由大到小依次减，</h3>
-        <h4>从重到轻随之变。</h4>
-        <h5>语法规范书写后，</h5>
-        <h6>具体效果刷新见。</h6>
+    <title>head</title> <!-- 网页标题 -->
 
-        <!-- p标签，p 指paragraph，意为段落-->
-        <p>我是一个段落标签</p>
-    </div>
-</body>
+</head>
+
+<body><!-- body元素，页面主体内容 --></body>
+
 </html>
+
+<!-- 写在html标签外的标签，默认属于body的子标签 -->
+<!-- 打印head对象 -->
+<script>
+    var head = document.getElementsByTagName("head")[0]
+    console.dir(head)
+
+    // 获取标签属性，包括自定义属性
+    console.log(head.attributes)
+
+    // 打印子节点（注释也是节点）
+    console.log(head.childNodes)
+
+    // 打印子元素
+    console.log(head.children)
+</script>
