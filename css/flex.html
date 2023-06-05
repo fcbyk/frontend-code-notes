@@ -1,0 +1,40 @@
+<div class="big-box solid-border flex-box">
+    <div class="small-box solid-border flex-children">1</div>
+    <div class="small-box solid-border flex-children">2</div>
+    <div class="small-box solid-border flex-children">3</div>
+</div>
+
+<style>
+    .flex-box{
+        display: flex;  /* 开启弹性盒子 */
+        
+        flex-direction: row;  /* 弹性盒子的主轴方向 */
+        flex-wrap: wrap;  /* 弹性盒子的副轴方向 */
+        flex-flow: row-reverse wrap-reverse; /* flex-direction 与 flex-wrap 的组合简写模式 */
+        
+        /* align-items和align-content没分清 */
+        justify-content: end;  /* 弹性元素在主轴上的排列方式 */
+        align-items:end;  /* 弹性元素在副轴上的排列方式 */
+        align-content: end; /* 弹性元素在行上的排列 */
+    }
+    .flex-children{
+        align-self: stretch;
+    }
+</style>
+
+<style>
+    .small-box{
+        height: 100px;
+        width: 100px;
+    }
+    .big-box{
+        height: 500px;
+        width: 500px;
+    }
+    .solid-border{
+        border: solid 5px silver;
+    }
+</style>
+
+
+
